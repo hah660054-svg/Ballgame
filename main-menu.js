@@ -1,4 +1,3 @@
-// STORAGE & LOCAL MEMORY SYSTEM
 const Storage = {
     getWins: () => parseInt(localStorage.getItem('infernal_wins') || '0'),
     getMatches: () => parseInt(localStorage.getItem('infernal_matches') || '0'),
@@ -14,7 +13,6 @@ const Storage = {
 let selectedHero = 'Hero1';
 let selectedMap = 1;
 
-// INITIALIZE UI ELEMENTS
 document.addEventListener('DOMContentLoaded', () => {
     updateMemoryUI();
     renderHeroCards();
@@ -29,51 +27,31 @@ function updateMemoryUI() {
 
 function renderHeroCards() {
     const container = document.getElementById('heroContainer');
-    container.innerHTML = '';
-
-    HEROES_DATABASE.forEach((hero, index) => {
-        const isSelected = hero.id === selectedHero;
-        const card = document.createElement('div');
-        card.className = `hero-card p-4 rounded-xl border-2 ${isSelected ? 'border-purple-500 bg-purple-950/40' : 'border-slate-800 bg-slate-900/60'} cursor-pointer hover:border-purple-400 transition flex flex-col items-center`;
-        card.onclick = () => {
-            selectedHero = hero.id;
-            renderHeroCards();
-        };
-
-        card.innerHTML = `
-            <div class="w-16 h-16 rounded-full bg-gradient-to-tr ${hero.gradient} shadow-lg flex items-center justify-center mb-2 border-2 border-white">
-                <i class="fa-solid ${hero.icon} text-2xl text-white"></i>
+    if (!container) return;
+    container.innerHTML = `
+        <div class="hero-card p-4 rounded-xl border-2 border-purple-500 bg-purple-950/40 cursor-pointer flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-purple-600 to-pink-400 shadow-lg flex items-center justify-center mb-2 border-2 border-white">
+                <i class="fa-solid fa-atom text-2xl text-white"></i>
             </div>
-            <h3 class="font-bold text-lg text-purple-300">${hero.name}</h3>
-            <span class="text-xs text-slate-300 font-mono mt-1">${hero.role}</span>
-            <p class="text-[11px] text-slate-400 text-center mt-2">${hero.desc}</p>
-        `;
-        container.appendChild(card);
-    });
+            <h3 class="font-bold text-lg text-purple-300">Portal Ball</h3>
+            <span class="text-xs text-slate-300 font-mono mt-1">Specialist / Teleporter</span>
+            <p class="text-[11px] text-slate-400 text-center mt-2">Uses Aim Joystick for directional Blinks & Blitzes.</p>
+        </div>
+    `;
 }
 
 function renderMapCards() {
     const container = document.getElementById('mapContainer');
-    container.innerHTML = '';
-
-    MAPS_DATABASE.forEach(map => {
-        const isSelected = map.id === selectedMap;
-        const card = document.createElement('div');
-        card.className = `map-card p-3 rounded-xl border-2 ${isSelected ? 'border-red-500 bg-red-950/30' : 'border-slate-800 bg-slate-900/60'} cursor-pointer flex flex-col items-center`;
-        card.onclick = () => {
-            selectedMap = map.id;
-            renderMapCards();
-        };
-
-        card.innerHTML = `
-            <div class="w-full h-24 rounded-lg ${map.bgBox} border ${map.borderColor} flex items-center justify-center font-bold text-slate-200 text-center p-2 text-xs">
-                MAP ${map.id}:<br>${map.name}
+    if (!container) return;
+    container.innerHTML = `
+        <div class="map-card p-3 rounded-xl border-2 border-red-500 bg-red-950/30 cursor-pointer flex flex-col items-center">
+            <div class="w-full h-24 rounded-lg bg-cyan-900/50 border border-cyan-400 flex items-center justify-center font-bold text-slate-200 text-center p-2 text-xs">
+                MAP 1:<br>Sunny Summer Beach
             </div>
-            <span class="text-[11px] text-slate-300 font-semibold mt-2">${map.tag}</span>
-            <span class="text-[10px] text-slate-400 text-center">${map.desc}</span>
-        `;
-        container.appendChild(card);
-    });
+            <span class="text-[11px] text-slate-300 font-semibold mt-2">Summer Special</span>
+            <span class="text-[10px] text-slate-400 text-center">Sunny golden beach arena.</span>
+        </div>
+    `;
 }
 
 function setupNavigationEvents() {
