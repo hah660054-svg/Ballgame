@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #05020a;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+canvas {
+    display: block;
+    background: #08030c;
+}
+
+.hud-glass {
+    background: rgba(18, 10, 28, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 68, 0, 0.3);
+    box-shadow: 0 0 15px rgba(255, 68, 0, 0.2);
+}
+
+.left-control-btn {
+    background: radial-gradient(circle, rgba(40, 15, 60, 0.9) 0%, rgba(15, 5, 25, 0.95) 100%);
+    border: 2px solid #ff5500;
+    box-shadow: 0 0 12px rgba(255, 85, 0, 0.4), inset 0 0 10px rgba(255, 85, 0, 0.2);
+    transition: transform 0.05s ease, border-color 0.15s ease;
+}
+
+.left-control-btn:active {
+    transform: scale(0.9);
+    border-color: #ff0055;
+    background: rgba(255, 0, 85, 0.4);
+}
+
+.joystick-base {
+    background: radial-gradient(circle, rgba(30, 10, 45, 0.6) 0%, rgba(10, 2, 15, 0.8) 100%);
+    border: 2px solid rgba(255, 85, 0, 0.4);
+    box-shadow: 0 0 15px rgba(255, 85, 0, 0.2);
+}
+
+.joystick-thumb {
+    background: radial-gradient(circle, #ff6600 0%, #990033 100%);
+    border: 2px solid #ffcc00;
+    box-shadow: 0 0 10px #ff6600;
+}
+
+.aim-thumb {
+    background: radial-gradient(circle, #00f0ff 0%, #0044aa 100%);
+    border: 2px solid #aaffff;
+    box-shadow: 0 0 10px #00f0ff;
+}
