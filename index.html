@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <!-- HERO CARDS CONTAINER (RENDERED VIA MAIN-MENU.JS) -->
+        <!-- HERO CARDS CONTAINER -->
         <div id="heroContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-auto max-w-4xl mx-auto w-full p-2">
             <!-- Hero cards dynamically loaded -->
         </div>
@@ -41,7 +41,7 @@
             <p class="text-slate-400 text-xs md:text-sm mt-1">Choose your battlefield (5 Arenas)</p>
         </div>
 
-        <!-- MAP CARDS CONTAINER (RENDERED VIA MAIN-MENU.JS) -->
+        <!-- MAP CARDS CONTAINER -->
         <div id="mapContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 my-auto max-w-6xl mx-auto w-full p-2">
             <!-- Map cards dynamically loaded -->
         </div>
@@ -54,10 +54,7 @@
 
     <!-- GAMEPLAY HUD & OVERLAY UI -->
     <div class="relative w-full h-full flex items-center justify-center overflow-hidden">
-        
-        <!-- HUD TOP OVERLAY -->
         <div class="absolute top-2 left-2 right-2 z-20 flex justify-between items-center hud-glass px-4 py-2 rounded-xl max-w-4xl mx-auto">
-            <!-- P1 HEALTH -->
             <div class="flex-1 mr-2">
                 <div class="flex justify-between items-center mb-1">
                     <span id="hudP1Name" class="font-bold text-orange-400 text-xs md:text-sm">PLAYER 1</span>
@@ -67,11 +64,7 @@
                     <div id="hudP1HpBar" class="h-full bg-gradient-to-r from-orange-500 to-amber-400 rounded-full transition-all duration-100" style="width: 100%;"></div>
                 </div>
             </div>
-
-            <!-- VS BADGE -->
             <div class="px-2 py-0.5 bg-red-950 border border-red-500 rounded text-[10px] font-black text-red-400">VS</div>
-
-            <!-- P2 HEALTH -->
             <div class="flex-1 ml-2 text-right">
                 <div class="flex justify-between items-center mb-1">
                     <span id="hudP2HpText" class="text-xs font-mono text-purple-300">100 / 100</span>
@@ -83,13 +76,9 @@
             </div>
         </div>
 
-        <!-- CANVAS -->
         <canvas id="gameCanvas" class="w-full h-full block"></canvas>
 
-        <!-- IN-GAME TOUCH CONTROLS -->
         <div id="mobileControls" class="absolute inset-0 z-30 pointer-events-none flex justify-between items-end p-2 md:p-6">
-            
-            <!-- LEFT CONTROLS -->
             <div class="pointer-events-auto flex flex-col items-start gap-2">
                 <div class="flex flex-col gap-2 ml-1">
                     <button id="btnSkill1" class="left-control-btn w-12 h-12 md:w-14 md:h-14 rounded-full text-amber-300 font-extrabold text-xs flex items-center justify-center">S1</button>
@@ -101,7 +90,6 @@
                 </div>
             </div>
 
-            <!-- RIGHT CONTROLS -->
             <div class="pointer-events-auto flex flex-col items-end gap-2">
                 <button id="btnJump" class="left-control-btn w-12 h-12 md:w-14 md:h-14 rounded-full text-emerald-400 font-extrabold text-xs flex items-center justify-center mb-2">JUMP</button>
                 <div id="aimJoystickBase" class="joystick-base relative w-28 h-28 md:w-36 md:h-36 rounded-full flex items-center justify-center border-cyan-500/50">
@@ -111,7 +99,6 @@
             </div>
         </div>
 
-        <!-- GAME OVER MODAL -->
         <div id="gameOverModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md">
             <div class="hud-glass p-6 rounded-2xl text-center max-w-sm w-full mx-4 border-2 border-red-500/50">
                 <h2 id="winnerText" class="text-3xl font-black text-amber-400 mb-2">VICTORY!</h2>
@@ -121,9 +108,15 @@
         </div>
     </div>
 
-    <!-- JS SCRIPTS IMPORT ORDER -->
-    <script src="heroes.js"></script>
-    <script src="maps.js"></script>
+    <!-- JS SCRIPTS WITH FALLBACK HANDLERS -->
+    <!-- HERO FILES LOAD (1 TO 30) -->
+    <script src="hero-1.js" onerror="console.warn('hero-1.js missing, using default')"></script>
+    <!-- နောက်မှ ထပ်ဖြည့်မည့် hero-2.js မှ hero-30.js တို့အတွက် safe loader -->
+    
+    <!-- MAP FILES LOAD (1 TO 5) -->
+    <script src="map-1.js" onerror="console.warn('map-1.js missing, using default')"></script>
+    
+    <!-- SYSTEM CORE -->
     <script src="main-menu.js"></script>
     <script src="game.js"></script>
 </body>
