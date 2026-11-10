@@ -1,5 +1,5 @@
 // ==========================================
-// FIGHTER CLASS FALLBACK (If fighter.js is missing)
+// FIGHTER CLASS FALLBACK
 // ==========================================
 if (typeof Fighter === 'undefined') {
     window.Fighter = class Fighter {
@@ -131,13 +131,13 @@ if (typeof Fighter === 'undefined') {
 }
 
 // ==========================================
-// MAP DATA FALLBACK (If map files are missing)
+// MAP DATA FALLBACK
 // ==========================================
 if (typeof getMapData === 'undefined') {
     window.getMapData = function(mapIndex, windowWidth, windowHeight) {
-        const worldWidth = Math.max(900, windowWidth);
+        const worldWidth = Math.max(800, windowWidth);
         const worldHeight = Math.max(500, windowHeight);
-        const groundY = worldHeight - 50;
+        const groundY = worldHeight - 60;
         return {
             isMassive: false,
             worldWidth: worldWidth,
@@ -239,8 +239,9 @@ window.addEventListener('keyup', (e) => { keys[e.code] = false; });
 document.getElementById('startBattleBtn')?.addEventListener('click', () => {
     document.getElementById('mapSelectScreen')?.classList.add('hidden');
     
-    const w = canvas ? canvas.width : window.innerWidth;
-    const h = canvas ? canvas.height : window.innerHeight;
+    resizeCanvas();
+    const w = canvas.width;
+    const h = canvas.height;
     
     activeMapData = typeof getMapData === 'function' ? getMapData(selectedMap, w, h) : {
         isMassive: false, worldWidth: w, worldHeight: h, bg: '#38bdf8',
@@ -250,8 +251,8 @@ document.getElementById('startBattleBtn')?.addEventListener('click', () => {
 
     const chosenHero = (typeof HEROES_DATABASE !== 'undefined' ? HEROES_DATABASE.find(h => h.id === selectedHero) : null) || { name: 'Portal Ball', color: '#ab00ff' };
 
-    player1 = new Fighter({ x: 100, y: 100, name: chosenHero.name, color: chosenHero.color, heroId: selectedHero, isAI: false });
-    villain = new Fighter({ x: activeMapData.worldWidth - 140, y: 100, name: 'Infernal Villain', color: '#ff2200', heroId: 'Hero2', isAI: true });
+    player1 = new Fighter({ x: 80, y: 50, name: chosenHero.name, color: chosenHero.color, heroId: selectedHero, isAI: false });
+    villain = new Fighter({ x: activeMapData.worldWidth - 120, y: 50, name: 'Infernal Villain', color: '#ff2200', heroId: 'Hero2', isAI: true });
 
     const p1NameEl = document.getElementById('hudP1Name');
     const p2NameEl = document.getElementById('hudP2Name');
@@ -269,7 +270,13 @@ document.getElementById('restartBtn')?.addEventListener('click', () => {
 
 function gameLoop() {
     requestAnimationFrame(gameLoop);
-    if (!isRunning || !ctx || !activeMapData) return;
+    if (!canvas || !ctx) return;
+
+    // Background rendering even before battle starts so screen isn't pitch black
+    ctx.fillStyle = (activeMapData && activeMapData.bg) ? activeMapData.bg : '#08030c';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (!isRunning || !activeMapData) return;
 
     let inputX = moveVec.x;
     if (keys['KeyA'] || keys['ArrowLeft']) inputX = -1;
@@ -288,9 +295,6 @@ function gameLoop() {
         camera.x = 0;
         camera.y = 0;
     }
-
-    ctx.fillStyle = activeMapData.bg || '#08030c';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.save();
     ctx.translate(-camera.x, -camera.y);
